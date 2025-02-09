@@ -2,567 +2,240 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
-    <meta name="apple-mobile-web-app-title" content="" />
-
-    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
-
+    <!-- Set viewport so the layout scales properly on mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>E-Invoice Training</title>
 
-    <link rel="canonical" href="https://codepen.io/jeffbredenkamp/pen/WGQvbp" />
-    <script type="text/javascript">
-      // When the window has finished loading create our google map below
-      google.maps.event.addDomListener(window, "load", init);
-
-      function init() {
-        // Basic options for a simple Google Map
-        var mapOptions = {
-          // How zoomed in you want the map to start at (always required)
-          zoom: 11,
-          scrollwheel: false,
-          navigationControl: false,
-          scaleControl: false,
-          draggable: false,
-          scaleControl: false,
-          disableDefaultUI: true,
-
-          // The latitude and longitude to center the map (always required)
-          center: new google.maps.LatLng(51.5073, -0.1277),
-
-          styles: [
-            {
-              featureType: "water",
-              elementType: "geometry",
-              stylers: [{ color: "#e9e9e9" }, { lightness: 17 }],
-            },
-            {
-              featureType: "landscape",
-              elementType: "geometry",
-              stylers: [{ color: "#f5f5f5" }, { lightness: 20 }],
-            },
-            {
-              featureType: "road.highway",
-              elementType: "geometry.fill",
-              stylers: [{ color: "#ffffff" }, { lightness: 17 }],
-            },
-            {
-              featureType: "road.highway",
-              elementType: "geometry.stroke",
-              stylers: [
-                { color: "#ffffff" },
-                { lightness: 29 },
-                { weight: 0.2 },
-              ],
-            },
-            {
-              featureType: "road.arterial",
-              elementType: "geometry",
-              stylers: [{ color: "#ffffff" }, { lightness: 18 }],
-            },
-            {
-              featureType: "road.local",
-              elementType: "geometry",
-              stylers: [{ color: "#ffffff" }, { lightness: 16 }],
-            },
-            {
-              featureType: "poi",
-              elementType: "geometry",
-              stylers: [{ color: "#f5f5f5" }, { lightness: 21 }],
-            },
-            {
-              featureType: "poi.park",
-              elementType: "geometry",
-              stylers: [{ color: "#dedede" }, { lightness: 21 }],
-            },
-            {
-              elementType: "labels.text.stroke",
-              stylers: [
-                { visibility: "on" },
-                { color: "#ffffff" },
-                { lightness: 16 },
-              ],
-            },
-            {
-              elementType: "labels.text.fill",
-              stylers: [
-                { saturation: 36 },
-                { color: "#333333" },
-                { lightness: 40 },
-              ],
-            },
-            { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
-            {
-              featureType: "transit",
-              elementType: "geometry",
-              stylers: [{ color: "#f2f2f2" }, { lightness: 19 }],
-            },
-            {
-              featureType: "administrative",
-              elementType: "geometry.fill",
-              stylers: [{ color: "#fefefe" }, { lightness: 20 }],
-            },
-            {
-              featureType: "administrative",
-              elementType: "geometry.stroke",
-              stylers: [
-                { color: "#fefefe" },
-                { lightness: 17 },
-                { weight: 1.2 },
-              ],
-            },
-          ],
-        };
-
-        // Get the HTML DOM element that will contain your map
-        // We are using a div with id="map" seen below in the <body>
-        var mapElement = document.getElementById("map");
-
-        // Create the Google Map using our element and options defined above
-        var map = new google.maps.Map(mapElement, mapOptions);
-
-        // Let's also add a marker while we're at it
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(51.5073, -0.1277),
-          map: map,
-          title: "Snazzy!",
-        });
-      }
-    </script>
-
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Typicons for icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/typicons/2.0.8/typicons.min.css"
     />
 
     <style>
-      @import "https://fonts.googleapis.com/css?family=Montserrat:400,700";
+      @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
-      /* Base Styles
-********************************************************************* */
-      html {
-        font-size: 62.5%;
-      }
+      /* Remove fixed height and overflow on html and body so vertical scrolling works */
+      html,
       body {
-        font-size: 1.5em;
-        line-height: 1.6;
-        font-weight: 400;
-        font-family: "Montserrat", sans-serif;
-        color: #222;
         margin: 0;
-      }
-      /* Grid
-********************************************************************* */
-      .container {
-        position: relative;
-        width: 100%;
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 0 20px;
-        box-sizing: border-box;
-      }
-      .column,
-      .columns {
-        width: 100%;
-        float: left;
-        box-sizing: border-box;
+        overflow-x: auto; /* Allow horizontal scroll if needed */
+        /* No height or overflow-y property here */
       }
 
-      @media (min-width: 400px) {
-        .container {
-          width: 85%;
-          padding: 0;
-        }
+      /* Optional: Remove fixed height from the full-page container */
+      .full-page {
+        display: flex;
+        flex-direction: column;
+        /* Let content dictate height */
       }
 
-      @media (min-width: 550px) {
-        .container {
-          width: 80%;
-        }
-        .column,
-        .columns {
-          margin-left: 4%;
-        }
-        .column:first-child,
-        .columns:first-child {
-          margin-left: 0;
-        }
-        .one.column,
-        .one.columns {
-          width: 4.66666666667%;
-        }
-        .two.columns {
-          width: 13.3333333333%;
-        }
-        .three.columns {
-          width: 22%;
-        }
-        .four.columns {
-          width: 30.6666666667%;
-        }
-        .five.columns {
-          width: 39.3333333333%;
-        }
-        .six.columns {
-          width: 48%;
-        }
-        .seven.columns {
-          width: 56.6666666667%;
-        }
-        .eight.columns {
-          width: 65.3333333333%;
-        }
-        .nine.columns {
-          width: 74%;
-        }
-        .ten.columns {
-          width: 82.6666666667%;
-        }
-        .eleven.columns {
-          width: 91.3333333333%;
-        }
-        .twelve.columns {
-          width: 100%;
-          margin-left: 0;
-        }
-        .one-third.column {
-          width: 30.6666666667%;
-        }
-        .two-thirds.column {
-          width: 65.3333333333%;
-        }
-        .one-half.column {
-          width: 48%;
-        }
-        /* Offsets */
-        .offset-by-one.column,
-        .offset-by-one.columns {
-          margin-left: 8.66666666667%;
-        }
-        .offset-by-two.column,
-        .offset-by-two.columns {
-          margin-left: 17.3333333333%;
-        }
-        .offset-by-three.column,
-        .offset-by-three.columns {
-          margin-left: 26%;
-        }
-        .offset-by-four.column,
-        .offset-by-four.columns {
-          margin-left: 34.6666666667%;
-        }
-        .offset-by-five.column,
-        .offset-by-five.columns {
-          margin-left: 43.3333333333%;
-        }
-        .offset-by-six.column,
-        .offset-by-six.columns {
-          margin-left: 52%;
-        }
-        .offset-by-seven.column,
-        .offset-by-seven.columns {
-          margin-left: 60.6666666667%;
-        }
-        .offset-by-eight.column,
-        .offset-by-eight.columns {
-          margin-left: 69.3333333333%;
-        }
-        .offset-by-nine.column,
-        .offset-by-nine.columns {
-          margin-left: 78%;
-        }
-        .offset-by-ten.column,
-        .offset-by-ten.columns {
-          margin-left: 86.6666666667%;
-        }
-        .offset-by-eleven.column,
-        .offset-by-eleven.columns {
-          margin-left: 95.3333333333%;
-        }
-        .offset-by-one-third.column,
-        .offset-by-one-third.columns {
-          margin-left: 34.6666666667%;
-        }
-        .offset-by-two-thirds.column,
-        .offset-by-two-thirds.columns {
-          margin-left: 69.3333333333%;
-        }
-        .offset-by-one-half.column,
-        .offset-by-one-half.columns {
-          margin-left: 52%;
-        }
+      /* Add spacing between sections */
+      .section {
+        margin-bottom: 1rem;
       }
-      /* Typography
-********************************************************************* */
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        margin-top: 0;
-        margin-bottom: 0;
-        font-weight: 300;
+
+      /* Header styles */
+      .header-section {
+        padding: 1rem;
       }
-      h1 {
-        font-size: 6em;
-        line-height: 1;
-        letter-spacing: -0.1rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: #27b6c7;
-        margin-bottom: 20px;
-      }
-      h2 {
-        font-size: 3.6rem;
-        line-height: 1.25;
-        letter-spacing: -0.1rem;
-      }
-      h3 {
+      .header-section h1 {
         font-size: 3rem;
-        line-height: 1.3;
-        text-align: center;
-      }
-      h4 {
-        font-size: 2.4rem;
-        line-height: 1.35;
-        letter-spacing: -0.08rem;
-      }
-      h5 {
-        font-size: 1.8rem;
-        line-height: 1.5;
-        letter-spacing: -0.05rem;
-      }
-      h6 {
-        font-size: 1.5rem;
-        line-height: 1.6;
-        letter-spacing: 0;
-      }
-
-      p {
-        margin-top: 0;
-      }
-
-      @media only screen and (max-width: 1150px) {
-        h1 {
-          font-size: 5em;
-        }
-
-        h2 {
-          font-size: 2em;
-        }
-      }
-
-      @media only screen and (max-width: 750px) {
-        h1 {
-          font-size: 3em;
-        }
-      }
-
-      @media only screen and (max-width: 550px) {
-        #device {
-          display: none;
-        }
-      }
-
-      /* Countdown
-********************************************************************* */
-
-      .days,
-      .hours,
-      .minutes,
-      .seconds {
-        font-size: 8em;
-        font-weight: bold;
-        text-align: center;
-        border-top: 3px solid #fff;
-        margin-top: 30px;
-      }
-
-      @media only screen and (max-width: 920px) {
-        .days,
-        .hours,
-        .minutes,
-        .seconds {
-          font-size: 5em;
-          margin: 0 10px;
-        }
-      }
-
-      /* General
-********************************************************************* */
-
-      header {
-        overflow: hidden;
-        padding: 20px 0 50px 0;
-      }
-
-      #blueBand {
-        background: #27b6c7;
-        min-height: 230px;
-        padding: 50px 0 50px 0;
-        color: #ffffff;
-        z-index: 999;
-        overflow: auto;
-      }
-
-      .icon {
-        font-size: 6.5em;
-      }
-
-      img {
-        width: 100%;
-        height: auto;
-      }
-
-      .btn {
-        background: #434443;
-        -webkit-border-radius: 6;
-        -moz-border-radius: 6;
-        border-radius: 6px;
-        color: #ffffff;
-        font-size: 1.4em;
-        padding: 14px 30px 14px 30px;
-        text-decoration: none;
-        border: 0;
-        margin: 20px 20px 0 0;
-      }
-
-      .btn:hover {
-        background: #27b6c7;
-        text-decoration: none;
-      }
-
-      #device {
-        padding-top: 150px;
-      }
-
-      footer {
-        background: #434443;
-        min-height: 100px;
-        padding: 50px 0 50px 0;
-      }
-
-      footer hr {
-        border: 2px solid #27b6c7;
-        border-image: none;
-      }
-
-      footer p {
-        color: #ffffff;
-        margin: 0;
-        display: inline;
-      }
-
-      footer h4 {
-        color: #ffffff;
+        color: #27b6c7;
         text-transform: uppercase;
-        font-size: 1.6em;
+      }
+      .header-section h2 {
+        font-size: 2rem;
+      }
+      .header-section p {
+        font-size: 1rem;
+      }
+      .header-section .icon {
+        font-size: 4rem;
       }
 
-      .socialIcons {
-        font-size: 1.8em;
-        color: #ffffff;
+      /* Countdown section styles */
+      .countdown-section {
+        background: #27b6c7;
+        color: #fff;
+        padding: 0.5rem;
+      }
+      .countdown-section h3 {
+        margin-bottom: 0.25rem;
+      }
+      .countdown-section .counter {
+        font-size: 2rem;
+        font-weight: bold;
+        border-top: 2px solid #fff;
+        padding-top: 0.5rem;
       }
 
-      #map {
+      /* Map section – let it expand as needed */
+      .map-section #map {
         width: 100%;
-        min-height: 400px;
+        height: 400px; /* You can set a fixed height, or use min-height */
+      }
+
+      /* Footer styles */
+      .footer-section {
+        background: #434443;
+        color: #fff;
+        padding: 0.5rem;
+        text-align: center;
+      }
+      .footer-section h4 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .footer-section p {
+        margin: 0.25rem 0;
+      }
+      .footer-section .socialIcons {
+        font-size: 1.5rem;
+        vertical-align: middle;
+        margin-right: 0.5rem;
+      }
+
+      /* Media Query for mobile: Adjust font sizes and spacing */
+      @media (max-width: 576px) {
+        .header-section h1 {
+          font-size: 2rem;
+        }
+        .header-section h2 {
+          font-size: 1.5rem;
+        }
+        .header-section p {
+          font-size: 0.9rem;
+        }
+        .header-section .icon {
+          font-size: 3rem;
+        }
+        .countdown-section .counter {
+          font-size: 1.5rem;
+        }
+        .footer-section h4 {
+          font-size: 1.2rem;
+        }
       }
     </style>
-
-    <script>
-      window.console = window.console || function (t) {};
-    </script>
   </head>
+  <body>
+    <!-- A full-page container -->
+    <div class="full-page">
+      <!-- Header Section -->
+      <header class="section header-section">
+        <div class="container">
+          <div class="row align-items-center">
+            <!-- Text Content -->
+            <div class="col-md-8">
+              <span class="typcn typcn-thumbs-ok icon"></span>
+              <h2>Welcome to</h2>
+              <h1>E-Invoice Training</h1>
+              <p>
+                Stay ahead in the digital era with our E-Invoice Training,
+                designed to help businesses and professionals seamlessly
+                transition to electronic invoicing.
+              </p>
+              <button class="btn btn-dark me-2">Find out more</button>
+              <button class="btn btn-dark">Download</button>
+            </div>
+            <!-- Image -->
+            <div class="col-md-4">
+              <img
+                id="device"
+                src="https://jeffbredenkamp.neocities.org/device.png"
+                alt="Device"
+                class="img-fluid"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
 
-  <body translate="no">
-    <header>
-      <div class="container">
-        <div class="eight columns">
-          <span class="typcn typcn-thumbs-ok icon"></span>
-          <h2 class="preheader">Welcome to</h2>
-          <h1 class="header">E-Invoice Training</h1>
-          <p class="paragraph">
-            Stay ahead in the digital era with our E-Invoice Training, designed
-            to help businesses and professionals seamlessly transition to
-            electronic invoicing. Whether you're new to e-invoicing or looking
-            to enhance your knowledge, this training covers everything you need
-            to know.
+      <!-- Countdown Section -->
+      <section class="section countdown-section">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-3">
+              <h3>Days</h3>
+              <div class="counter days">0</div>
+            </div>
+            <div class="col-3">
+              <h3>Hours</h3>
+              <div class="counter hours">0</div>
+            </div>
+            <div class="col-3">
+              <h3>Minutes</h3>
+              <div class="counter minutes">0</div>
+            </div>
+            <div class="col-3">
+              <h3>Seconds</h3>
+              <div class="counter seconds">0</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Map Section -->
+      <section class="section map-section">
+        <div id="map"></div>
+      </section>
+
+      <!-- Footer Section -->
+      <footer class="section footer-section">
+        <div class="container">
+          <h4>Find us on</h4>
+          <hr />
+          <p>
+            <span class="typcn typcn-social-facebook socialIcons"></span>Facebook
           </p>
-          <button class="btn">Find out more</button>
-          <button class="btn">Download</button>
+          <p>
+            <span class="typcn typcn-social-twitter socialIcons"></span>Twitter
+          </p>
+          <p>
+            <span class="typcn typcn-social-instagram socialIcons"></span>Instagram
+          </p>
+          <p>
+            <span class="typcn typcn-social-linkedin socialIcons"></span>LinkedIn
+          </p>
         </div>
-        <div class="four columns">
-          <img
-            id="device"
-            src="https://jeffbredenkamp.neocities.org/device.png"
-            width="378"
-            height="676"
-            alt="Device"
-          />
-        </div>
-      </div>
-    </header>
-    <div id="blueBand">
-      <div class="container">
-        <div class="three columns">
-          <h3>Days</h3>
-          <div class="days"></div>
-        </div>
-        <div class="three columns">
-          <h3>Hours</h3>
-          <div class="hours"></div>
-        </div>
-        <div class="three columns">
-          <h3>Minutes</h3>
-          <div class="minutes"></div>
-        </div>
-        <div class="three columns">
-          <h3>Seconds</h3>
-          <div class="seconds"></div>
-        </div>
-      </div>
+      </footer>
     </div>
 
-    <div id="map"></div>
-
-    <footer>
-      <div class="container">
-        <h4>Find us on</h4>
-        <hr />
-        <p>
-          <span class="typcn typcn-social-facebook socialIcons"></span>Facebook
-        </p>
-        <p>
-          <span class="typcn typcn-social-twitter socialIcons"></span>Twitter
-        </p>
-        <p>
-          <span class="typcn typcn-social-instagram socialIcons"></span
-          >Instagram
-        </p>
-        <p>
-          <span class="typcn typcn-social-linkedin socialIcons"></span>LinkedIn
-        </p>
-      </div>
-    </footer>
+    <!-- jQuery, GSAP, and Bootstrap Bundle (with Popper) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
-    <script id="rendered-js">
+
+    <script>
+      // Example GSAP animations
       TweenMax.from("#device", 0.8, {
         y: 50,
         opacity: 0,
         ease: Back.easeOut,
         delay: 1,
       });
-      TweenMax.from(".header", 0.8, { opacity: 0, x: 30, delay: 0.6 });
-      TweenMax.from(".preheader", 1, { opacity: 0, x: -30, delay: 0.2 });
-      TweenMax.from(".paragraph", 1, { opacity: 0, delay: 1, y: 20 });
+      TweenMax.from(".header-section h1", 0.8, {
+        opacity: 0,
+        x: 30,
+        delay: 0.6,
+      });
+      TweenMax.from(".header-section h2", 1, {
+        opacity: 0,
+        x: -30,
+        delay: 0.2,
+      });
+      TweenMax.from(".header-section p", 1, { opacity: 0, delay: 1, y: 20 });
       TweenMax.staggerFrom(".btn", 0.5, { y: 10, opacity: 0, delay: 1.6 }, 0.4);
 
-      var goalDay = "2020/08/27 00:00:00";
-
-      var timerId = 0;
-      timerId = setInterval(function () {
+      // Countdown Timer (for demonstration)
+      var goalDay = "2025/12/31 00:00:00"; // Update as needed
+      var timerId = setInterval(function () {
         var t = Date.parse(goalDay) - Date.parse(new Date());
         if (t < 0) {
           $(".days").text("0");
@@ -580,8 +253,7 @@
           $(".minutes").text(minutes);
           $(".seconds").text(seconds);
         }
-      }, 2000);
-      //# sourceURL=pen.js
+      }, 1000);
     </script>
   </body>
 </html>
